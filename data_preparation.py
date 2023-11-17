@@ -437,4 +437,29 @@ max_value = int(np.ceil(train.Age.max()))
 inter_value = int(np.round(age_range/10))
  
 val = (min_value, max_value, inter_value)
-print(val)
+print(val) # (0, 80, 8)
+
+# calculate the intervals
+intervals = [i for i in range(min_value, max_value+inter_value, inter_value)]
+labels = ['Bin_'+str(i) for i in range(1,len(intervals))]
+print(intervals)
+print(labels)
+
+train['age_labels'] = pd.cut(x = train.Age, bins=intervals, labels=labels, include_lowest=True)
+train['age_interval'] = pd.cut(x = train.Age, bins=intervals, include_lowest=True)
+
+# display the bins in graph along with frequency of occurence 
+sns.countplot(train.age_labels)
+plt.show()
+
+# l = []
+
+# for index, value in train['age_labels'].items():
+#     l.append(intervals[labels.index(value)])
+    
+# train['age_labels'] = l
+        
+        
+# # display the bins in graph along with frequency of occurence 
+# sns.countplot(train.age_labels)
+# plt.show()
